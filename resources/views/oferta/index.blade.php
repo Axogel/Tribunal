@@ -38,9 +38,13 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Clientes</label>
+                        <input class="form-check-input" type="checkbox" id="selectAllCheckbox" onchange="selectAll()"><!-- Agrega un ID para identificar este checkbox -->
+
+                        <label class="form-check-label" for="selectAllCheckbox">Seleccionar todos</label>
+
                         @foreach($clientes as $cliente)
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="clientes[]" value="{{ $cliente->id }}" id="cliente_{{ $cliente->id }}">
+                                <input class="form-check-input clientesCheck" type="checkbox" name="clientes[]" value="{{ $cliente->id }}" id="cliente_{{ $cliente->id }}">
                                 <label class="form-check-label" for="cliente_{{ $cliente->id }}">{{ $cliente->name }}</label>
                             </div>
                         @endforeach
@@ -58,6 +62,16 @@
 @endsection
 @section('js')
 <!--Select2 js -->
+<script>
+    function selectAll() {
+        let checkboxes = document.querySelectorAll('.clientesCheck'); // Selecciona todos los checkboxes
+        let selectAllCheckbox = document.getElementById('selectAllCheckbox'); // Obtiene el checkbox "Seleccionar todos"
+
+        checkboxes.forEach(function(checkbox) {
+            checkbox.checked = selectAllCheckbox.checked; // Establece el estado de cada checkbox según el estado del checkbox "Seleccionar todos"
+        });
+    }
+</script>
 
 <script src="{{URL::asset('assets/plugins/select2/select2.full.min.js')}}"></script>
 <script src="{{URL::asset('assets/js/select2.js')}}"></script>

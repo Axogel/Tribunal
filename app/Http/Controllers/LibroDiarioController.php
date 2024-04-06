@@ -133,6 +133,10 @@ class LibroDiarioController extends Controller
         return redirect()->route('libroDiario.index')->with('success',$success);
 
 
+    }   
+    public function gastos()
+    {
+        return view('libroDiario.gastos');
     }
 
     public function librosPorFecha($fecha)

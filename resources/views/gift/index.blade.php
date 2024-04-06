@@ -11,7 +11,7 @@
 						<!--Page header-->
 						<div class="page-header">
 							<div class="page-leftheader">
-								<h4 class="page-title">Inventario</h4>
+								<h4 class="page-title">Inventario - Regalos o Prestamos</h4>
 							</div>
 						</div>
 						<!--End Page header-->
@@ -37,31 +37,22 @@
                                                 <label for="fecha">Buscar:</label>
                                                 <input type="text" id="search" name="search" class="form-control" placeholder="buscador">
                                             </div>
-                                            <div class="card-options d-flex flex-wrap  flex-column flex-sm-row">
-                                                <div class="btn-group ml-5 mb-2">
-                                                    <a class="btn btn-primary btn-responsive" href="{{ route('exportInventario') }}">
-                                                        <i class="fa fa-download mr-2"></i>Descargar Excel
-                                                    </a>
-                                                </div>
-                                                <div class="btn-group ml-5 mb-2">
-                                                    <a class="btn btn-primary  btn-responsive" data-target="#modaldemo1" data-toggle="modal" href="">
-                                                        <i class="fa fa-plus mr-2"></i>Añadir Excel
-                                                    </a>
-                                                </div>
-                                                <div class="btn-group ml-5 mb-2">
-                                                    <a class="btn btn-primary  btn-responsive" href="{{ route('inventario.create') }}">
-                                                        <i class="fa fa-plus mr-2"></i>Añadir un Producto
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            
+										<div class="card-options d-flex flex-wrap  flex-column flex-sm-row">
+                                            <div class="btn-group ml-5 mb-0">
+                                                <a class="btn btn-primary" href="{{ route('alquilado.export') }}"><i class="fa fa-download mr-2"></i>Descargar Excel</a>
+											</div>
+							
+											<div class="btn-group ml-5 mb-0 mt-1 mt-lg-0">
+                                                <a class="btn btn-primary" href="{{route('inventario.create')}}"><i class="fa fa-plus mr-2"></i>Añadir Producto</a>
+											</div>
+										</div>
 									</div>
 									<div class="card-body">
 										<div class="table-responsive">
-                                            <table id="table" class=" table table-bordered text-nowrap key-buttons" style="border-color:#eff0f6;">
-                                                <thead style="border-color:#eff0f6;">
+                                            <table id="example" class="table table-bordered text-nowrap key-buttons">
+                                                <thead>
                                                     <th class="border-bottom-0">Codigo</th>
-                                                    <th class="border-bottom-0">Producto</th>
+                                                    <th class="border-bottom-0">almacen</th>
                                                     <th class="border-bottom-0">marca</th>
                                                     <th class="border-bottom-0">talla</th>
                                                     <th class="border-bottom-0">tipo</th>
@@ -70,23 +61,13 @@
 
                                                     <th class="border-bottom-0">color</th>
                                                     <th class="border-bottom-0">estado</th>
-                                                    <th class="border-bottom-0">alquiler</th>
-                                                    <th style="border-color:#eff0f6;"></th>
-                                                    <th style="border-color:#eff0f6;"></th>
-                                                    <th style="border-color:#eff0f6;"></th>
-
-                                                    @if(Auth::user()->isSuper())
-
-                                                    <th style="border-color:#eff0f6;"></th>
-                                                    <th style="border-color:#eff0f6;"></th>
-                                                    @endif
                                                 </thead>
-                                                <tbody id="contentTable">
+                                                <tbody>
                                                     @if($inventario->isNotEmpty())
                                                         @foreach($inventario as $producto)
                                                             <tr class="bold producto-row">
                                                                 <td>{{$producto->codigo}}</td>
-                                                                <td>{{$producto->producto}}</td>
+                                                                <td>{{$producto->almacen}}</td>
                                                                 <td>{{$producto->marca}}</td>
                                                                 <td>{{$producto->talla}}</td>
                                                                 <td>{{$producto->tipo}}</td>
@@ -105,33 +86,20 @@
                                                                         Alquilado
                                                                     @endif
                                                                 </td>
-
-
-                                                                <td @if($producto->alquiler && strtotime($producto->alquiler) < strtotime(now()->subDays(3))) class="bg-danger text-white" @endif>
-                                                                    {{$producto->alquiler}}
-                                                                </td>
-
-
                                                                 <td>
-                                                                @if($producto->disponibilidad ==1)
-                                                                    <a class="btn btn-success btn-xs" href="{{ route('orden.crear', ['id' => $producto->codigo]) }}" ><span class=" fa fa-money"></span> </a>
-                                                                    @else 
-                                                                    <a class="btn btn-dark btn-xs" href="#"  style="cursor: not-allowed"><span class=" fa fa-money"></span> </a>
-                                                                    @endif
-                                                                </td>
-                                                                <td>
-                                                                <form id="giftForm" action="{{ route('inventario.sendGift', ['id' => $producto->codigo]) }}" method="post">
+                                                                <form id="comeBackGift" action="{{ route('inventario.comeBackGift', ['id' => $producto->codigo]) }}" method="POST">
                                                                     {{ csrf_field() }}
                                                                     {{ method_field('POST') }}
-                                                                    <button class="btn btn-info btn-xs" onclick="gift()" type="button"><span class=" fa fa-gift"></span></button>
+                                                                    <button class="btn btn-info btn-xs" onclick="comeBackGift()" type="button"><span class="fa fa-gift"></span></button>
                                                                 </form>
                                                                 </td>
+
                                                                 @if(Auth::user()->isSuper())
 
 
                                                                 <td><a class="btn btn-primary btn-xs" href="{{ route('inventario.edit', ['id' => $producto->codigo]) }}" ><span class="fa fa-pencil"></span></a></td>
                                                                 <td>
-                                                                <form id="deleteForm" action="{{ route('inventario.destroy', ['id' => $producto->codigo]) }}" method="delete">
+                                                                <form id="deleteForm" action="{{ route('inventario.destroy', ['id' => $producto->codigo]) }}" method="POST">
                                                                     {{ csrf_field() }}
                                                                     {{ method_field('DELETE') }}
                                                                     <button class="btn btn-danger btn-xs" onclick="confirmDelete()" type="button"><span class="fa fa-trash"></span></button>
@@ -160,27 +128,11 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content modal-content-demo">
                         <div class="modal-header">
-                            <h6 class="modal-title">Importar Archivo</h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                            <h6 class="modal-title">File Upload</h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
                         </div>
-                        <div class="modal-body">
-                            <form method="POST" action="{{ route('inventario.import') }}" role="form" enctype="multipart/form-data">
-                                {{ csrf_field() }}
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        <div class="custom-file">
-                                            <input type="file" id="excel" name="excel" class="custom-file-input p-2" data-height="250" accept=".xlsx, .xls, .csv" onchange='openFile(event)'/>
-                                            <label class="custom-file-label">Elegir Archivo Excel, Csv</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 p-3">
-                                    <button type="submit" class="btn btn-lg btn-primary">Importar</button>
-                                </div>
-                            </form>
-    
-                        </div>
+           
                         <div class="modal-footer">
-                            <button class="btn btn-light" data-dismiss="modal" type="button">Cerrar</button>
+                            <button class="btn btn-light" data-dismiss="modal" type="button">Close</button>
                         </div>
                     </div>
                 </div>
@@ -209,11 +161,11 @@
             document.getElementById('deleteForm').submit();
         }
     }
-   async function gift() {
-    if (confirm("¿Está seguro de que desea regalar o prestar este elemento?")) {  
-        document.getElementById('giftForm').submit();
+    function comeBackGift() {
+        if (confirm("¿Está seguro  que quieres regresar este elemento?")) {
+            document.getElementById('comeBackGift').submit();
+        }
     }
-}
 </script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -236,7 +188,6 @@
     });
 </script>
 
-
 <script type="text/javascript">
     var openFile = function(event) {
         var input = event.target;
@@ -252,10 +203,4 @@
         reader.readAsText(input.files[0]);
     };
 </script>
-
-<style>
-    .btn-responsive {
-        width: 200px;
-    }
-</style>
 @endsection

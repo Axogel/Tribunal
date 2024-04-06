@@ -41,6 +41,27 @@ class InventarioController extends Controller
     $inventario = Inventario::where("disponibilidad", 0)->get();
     return view("alquilado.index", compact("inventario"));
     }
+    public function gifts() 
+    {
+        $inventario = Inventario::where("disponibilidad", 3)->get();
+        return view("gift.index", compact("inventario"));
+    }   
+    public function sendGift($id)
+    {
+        $gift=Inventario::findOrFail($id);
+        $gift->disponibilidad = 3;
+        $gift->save();
+        $success = array("message" => "Producto actualizado satisfactoriamente", "alert" => "success");
+        return redirect()->route('inventario.gift')->with('success', $success);
+    }
+    public function comeBackGift($id)
+    {
+        $gift=Inventario::findOrFail($id);
+        $gift->disponibilidad = 1;
+        $gift->save();
+        $success = array("message" => "Producto actualizado satisfactoriamente", "alert" => "success");
+        return redirect()->route('inventario.gift')->with('success', $success);
+    }
 
     /**
      * Show the form for creating a new resource.

@@ -37,6 +37,14 @@ class LibroMayorSeeder extends Seeder
                 'saldo' => 0,
 
             ],
+            [
+                'cuenta' => 'Gastos',
+                'ultimo_saldo' => $fecha,
+                'saldo_inicial' => 0,
+                'icon' => 'fa fa-line-chart',
+                'tipo'=> 'egreso',
+                'saldo' => 0,
+            ],
             
         ];
         LibroMayor::insert($libros);   

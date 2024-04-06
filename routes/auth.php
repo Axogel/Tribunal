@@ -3,7 +3,7 @@ use Illuminate\Support\Facades\Route;
 use App\Mail\Transfer;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Middleware\Authenticate;
-use App\Http\Controllers\{ClienteController, DivisaController, FacturaController, HomeController,UserController,InventarioController, LibroDiarioController, LibroMayorController, NotificacionController, OfertasController, OrdenEntregaController};
+use App\Http\Controllers\{BackupController, ClienteController, DivisaController, FacturaController, HomeController,UserController,InventarioController, LibroDiarioController, LibroMayorController, NotificacionController, OfertasController, OrdenEntregaController};
 use App\Models\LibroDiario;
 
 Auth::routes();
@@ -53,6 +53,11 @@ Route::middleware([Authenticate::class])->group(function () {
     Route::get('inventario/create', [InventarioController::class, 'create'])->name('inventario.create');
     Route::post('inventario', [InventarioController::class, 'store'])->name('inventario.store');
     Route::put('inventario/{id}', [InventarioController::class, 'update'])->name('inventario.update');
+    Route::get('/gift', [InventarioController::class ,'gifts'])->name('inventario.gift');
+    Route::post('/gift/{id}', [InventarioController::class, 'sendGift'])->name('inventario.sendGift');
+    Route::post('/comegift/{id}', [InventarioController::class, 'comeBackGift'])->name('inventario.comeBackGift');
+    Route::get('/gastos', [LibroDiarioController::class, 'gastos'])->name('gastos.index');
+
 
     Route::resource('orden', OrdenEntregaController::class);
     Route::get('orden/create/{id}', [OrdenEntregaController::class, 'create'])->name('orden.crear');

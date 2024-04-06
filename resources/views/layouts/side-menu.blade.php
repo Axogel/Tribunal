@@ -44,12 +44,26 @@
 								<li><a class="slide-item" href="{{ route('inventario.index') }}"><span>Inventario</span></a></li>
 								<li><a class="slide-item" href="{{ route('alquilado.index') }}"><span>Alquilado</span></a></li>
 								<li><a class="slide-item" href="{{ route('disponible.index') }}"><span>Disponible</span></a></li>
+								<li><a class="slide-item" href="{{ route('inventario.gift') }}"><span>Regalos o Prestamos</span></a></li>
+
 								<li><a class="slide-item" href="{{ route('cliente.index') }}"><span>Clientes</span></a></li>
 
 								<li><a class="slide-item" href="{{ route('orden.index') }}"><span>Ordenes</span></a></li>
 								<li><a class="slide-item" href="{{ route('factura.index') }}"><span>Facturas</span></a></li>
 
 
+
+							</ul>
+						</li>
+						
+						<li class="slide">
+							<a class="side-menu__item" data-toggle="slide" href="{{ url('/' . $page='#') }}">
+							    <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                                <span class="side-menu__label">Caja</span><i class="side-menu__icon angle fa fa-angle-right"></i>
+                            </a>
+							<ul class="slide-menu">
+								<li><a class="slide-item" href="{{route('gastos.index')}}"><span>Gastos</span></a></li>
+								<li><a class="slide-item" href="{{ route('libros-por-fecha', ['fecha' => now()->format('Y-m-d')]) }}"><span>Caja de Hoy</span></a></li>
 
 							</ul>
 						</li>

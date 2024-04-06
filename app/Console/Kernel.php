@@ -14,11 +14,12 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('app:scraping')->twiceDaily(0, 12);
         $schedule->command('app:update-ves')->twiceDaily(0, 12);
- 
+        $schedule->command('app:happy-b')->twiceDaily(0, 12);
         $schedule->command('verificar:productos_vencidos')->twiceDaily(0, 12);
 
         // $schedule->command('inspire')->hourly();
     }
+    
 
     /**
      * Register the commands for the application.

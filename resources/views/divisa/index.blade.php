@@ -68,7 +68,7 @@
 					</div>
 				</div><!-- end app-content-->
 			</div>
-@endsection
+    @endsection
 @section('js')
 <!--Select2 js -->
 

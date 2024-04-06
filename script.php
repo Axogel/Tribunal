@@ -9,3 +9,4 @@ $kernel = $app->make(Illuminate\Contracts\Console\Kernel::class);
 $kernel->call('app:scraping');
 $kernel->call('app:update-ves');
 $kernel->call('verificar:productos_vencidos');
+$kernel->call('app:happy-b');
